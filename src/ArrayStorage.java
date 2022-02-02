@@ -4,6 +4,7 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    private int size = 0;
 
     void clear() {
         for (int i = 0; i < storage.length; i++) {
@@ -12,34 +13,35 @@ public class ArrayStorage {
             }
             storage[i] = null;
         }
+        this.size = 0;
     }
 
     void save(Resume r) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
                 storage[i] = r;
+                this.size++;
                 break;
             }
         }
     }
 
     Resume get(String uuid) {
-        Resume foundResume = null;
         for (Resume resume : storage) {
             if (resume != null) {
                 if (resume.toString().equals(uuid)) {
-                    foundResume = resume;
-                    break;
+                    return resume;
                 }
-            } else break;
+            }
         }
-        return foundResume;
+        return null;
     }
 
     void delete(String uuid) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i].toString().equals(uuid)) {
                 storage[i] = null;
+                this.size--;
                 break;
             }
         }
@@ -58,15 +60,7 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        int arrayLength = 0;
-        for (Resume resume : storage) {
-            if (resume != null) {
-                arrayLength++;
-            } else {
-                break;
-            }
-        }
-        Resume[] currentResume = new Resume[arrayLength];
+        Resume[] currentResume = new Resume[size()];
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] != null) {
                 currentResume[i] = storage[i];
@@ -76,14 +70,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        int arraySize = 0;
-        for (Resume resume : storage) {
-            if (resume != null) {
-                arraySize++;
-            } else {
-                break;
-            }
-        }
-        return arraySize;
+        return this.size;
     }
 }
