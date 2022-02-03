@@ -13,14 +13,14 @@ public class ArrayStorage {
             }
             storage[i] = null;
         }
-        this.size = 0;
+        size = 0;
     }
 
     void save(Resume r) {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i] == null) {
                 storage[i] = r;
-                this.size++;
+                size++;
                 break;
             }
         }
@@ -41,7 +41,7 @@ public class ArrayStorage {
         for (int i = 0; i < storage.length; i++) {
             if (storage[i].toString().equals(uuid)) {
                 storage[i] = null;
-                this.size--;
+                size--;
                 break;
             }
         }
@@ -60,16 +60,12 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] currentResume = new Resume[size()];
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] != null) {
-                currentResume[i] = storage[i];
-            }
-        }
-        return currentResume;
+        Resume[] allResumes  = new Resume[size];
+        System.arraycopy(storage, 0, allResumes, 0, size);
+        return allResumes ;
     }
 
     int size() {
-        return this.size;
+        return size;
     }
 }
