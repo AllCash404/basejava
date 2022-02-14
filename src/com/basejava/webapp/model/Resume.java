@@ -5,6 +5,8 @@ package com.basejava.webapp.model;
  */
 public class Resume {
 
+    private String uuid;
+
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
@@ -12,9 +14,6 @@ public class Resume {
     public String getUuid() {
         return uuid;
     }
-
-    // Unique identifier
-    private String uuid;
 
     @Override
     public String toString() {
