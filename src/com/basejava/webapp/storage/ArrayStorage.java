@@ -17,9 +17,10 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (checkingInStorage(r.getUuid())) {
+        int index = searchIndex(r.getUuid());
+        if (index != -1) {
             System.out.println("ОШИБКА: резюме " + r.getUuid() + " находится в хранилище.");
-        } else if (storage[storage.length - 1] == null) {
+        } else if (size < storage.length) {
             storage[size] = r;
             size++;
         } else {
@@ -28,33 +29,33 @@ public class ArrayStorage {
     }
 
     public void update(Resume r) {
-        if (checkingInStorage(r.getUuid())) {
-            int index = searchIndex(r.getUuid());
-            storage[index] = r;
-        } else {
+        int index = searchIndex(r.getUuid());
+        if (index == -1) {
             System.out.println("ОШИБКА: резюме " + r.getUuid() + " не найдено.");
+        } else {
+            storage[index] = r;
         }
     }
 
     public Resume get(String uuid) {
-        if (checkingInStorage(uuid)) {
-            int index = searchIndex(uuid);
-            return storage[index];
-        } else {
+        int index = searchIndex(uuid);
+        if (index == -1) {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
+        } else {
+            return storage[index];
         }
         return null;
     }
 
     public void delete(String uuid) {
-        if (checkingInStorage(uuid)) {
-            for (int i = 0; i < size; i++) {
-                System.arraycopy(storage, i + 1, storage, i, size - i);
-                size--;
-                break;
-            }
-        } else {
+        int index = searchIndex(uuid);
+        if (index == -1) {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
+        } else {
+
+            System.arraycopy(storage, index, storage, 0, storage.length);
+            size--;
+
         }
     }
 
@@ -71,17 +72,7 @@ public class ArrayStorage {
         return size;
     }
 
-    boolean checkingInStorage(String uuid) {
-        boolean result = false;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].toString().equals(uuid)) {
-                result = true;
-            }
-        }
-        return result;
-    }
-
-    public int searchIndex(String uuid) {
+    private int searchIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].toString().equals(uuid)) {
                 return i;
