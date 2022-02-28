@@ -12,7 +12,7 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -41,10 +41,9 @@ public class ArrayStorage {
         int index = searchIndex(uuid);
         if (index == -1) {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
-        } else {
-            return storage[index];
+            return null;
         }
-        return null;
+        return storage[index];
     }
 
     public void delete(String uuid) {
@@ -52,10 +51,8 @@ public class ArrayStorage {
         if (index == -1) {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
         } else {
-
-            System.arraycopy(storage, index, storage, 0, storage.length);
+            System.arraycopy(storage, index + 1, storage, index, size - index);
             size--;
-
         }
     }
 
