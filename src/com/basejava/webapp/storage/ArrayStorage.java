@@ -50,6 +50,8 @@ public class ArrayStorage {
         int index = searchIndex(uuid);
         if (index == -1) {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
+        } else if (index == storage.length - 1) {
+            storage[index] = null;
         } else {
             System.arraycopy(storage, index + 1, storage, index, size - index);
             size--;
