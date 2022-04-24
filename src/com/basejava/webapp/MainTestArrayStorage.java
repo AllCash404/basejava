@@ -2,6 +2,7 @@ package com.basejava.webapp;
 
 import com.basejava.webapp.model.Resume;
 import com.basejava.webapp.storage.ArrayStorage;
+import com.basejava.webapp.storage.SortedArrayStorage;
 
 /**
  * Test for your com.basejava.webapp.storage.ArrayStorage implementation
@@ -22,12 +23,14 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
 
+        final SortedArrayStorage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
+
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
 
-        r1.setUuid("uuid1.1");
+        r1.setUuid("uuid4");
         ARRAY_STORAGE.update(r1);
 
         printAll();
@@ -37,6 +40,9 @@ public class MainTestArrayStorage {
         printAll();
 
         System.out.println("Size: " + ARRAY_STORAGE.size());
+        System.out.println("Size: " + SORTED_ARRAY_STORAGE.get(r2.getUuid()));
+
+
     }
 
     static void printAll() {
