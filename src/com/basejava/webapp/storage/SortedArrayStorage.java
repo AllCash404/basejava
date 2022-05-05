@@ -24,12 +24,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void clear() {
-        Arrays.fill(sortStorage, 0, size, null);
-        size = 0;
-    }
-
-    @Override
     public void update(Resume r) {
         int index = searchIndex(r.getUuid());
         if (index == -1) {
@@ -42,53 +36,14 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    public void save(Resume r) {
-        int index = searchIndex(r.getUuid());
-        if (index >= 0) {
-            System.out.println("ОШИБКА: резюме " + r.getUuid() + " находится в хранилище.");
-        } else if (size < storage.length) {
-            sortStorage[size] = r;
-            size++;
-        } else {
-            System.out.println("ОШИБКА: хранилище заполнено.");
-        }
-    }
-
-    @Override
-    public void delete(String uuid) {
-        int index = searchIndex(uuid);
-        if (index == -1) {
-            System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
-        } else if (index == sortStorage.length - 1) {
-            sortStorage[index] = null;
-            size--;
-        } else {
-            System.arraycopy(sortStorage, index + 1, sortStorage, index, size - index);
-            size--;
-        }
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        int index = searchIndex(uuid);
-        if (index == -1) {
-            System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
-            return null;
-        }
-        return sortStorage[index];
-    }
-
-    @Override
-    public Resume[] getAll() {
-        Resume[] allResumes = new Resume[size];
-        System.arraycopy(sortStorage, 0, allResumes, 0, size);
-        return allResumes;
-    }
-
-    @Override
     protected int searchIndex(String uuid) {
         Resume searchKey = new Resume();
         searchKey.setUuid(uuid);
         return Arrays.binarySearch(sortStorage, 0, size(), searchKey);
+    }
+
+    @Override
+    protected Resume[] storage() {
+        return sortStorage;
     }
 }
