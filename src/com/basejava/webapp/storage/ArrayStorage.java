@@ -18,6 +18,6 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected Resume[] storage() {
-        return new Resume[0];
+        return storage;
     }
 }
