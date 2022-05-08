@@ -7,6 +7,10 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
     protected Resume[] sortStorage = Arrays.copyOf(storage, storage.length);
 
+    public SortedArrayStorage() {
+        sortingStorage();
+    }
+
     private void sortingStorage() {
         Resume searchKey = new Resume();
         for (int i = 0; i < size; i++) {
@@ -20,18 +24,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
                System.arraycopy(sortStorage, i + 1, sortStorage, i, size);
                sortStorage[index * -1 -2] = buf;
             }
-        }
-    }
-
-    @Override
-    public void update(Resume r) {
-        int index = searchIndex(r.getUuid());
-        if (index == -1) {
-            System.out.println("ОШИБКА: резюме " + r.getUuid() + " не найдено.");
-        } else {
-            storage[index * -1 - 1] = r;
-            System.out.println("Резюме обновлено");
-            sortingStorage();
         }
     }
 

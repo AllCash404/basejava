@@ -12,7 +12,7 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public void update(Resume r) {
         int index = searchIndex(r.getUuid());
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("ОШИБКА: резюме " + r.getUuid() + " не найдено.");
         } else {
             storage()[index] = r;
@@ -36,7 +36,7 @@ public abstract class AbstractArrayStorage implements Storage {
     @Override
     public void delete(String uuid) {
         int index = searchIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
         } else if (index == size - 1) {
             storage()[index] = null;
