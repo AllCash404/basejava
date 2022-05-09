@@ -32,7 +32,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
             System.out.println("ОШИБКА: резюме " + r.getUuid() + " находится в хранилище.");
         } else if (size < storage.length) {
             if (size != 0) {
-                System.arraycopy(storage, index * -1 - 1, storage, (index * -1 - 1) + 1, size);
+                System.arraycopy(storage, index * -1 - 1, storage, index * -1, size);
                 storage[index * -1 - 1] = r;
             } else
                 storage[size] = r;
