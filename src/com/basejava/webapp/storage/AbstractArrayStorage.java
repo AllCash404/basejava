@@ -15,7 +15,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index < 0) {
             System.out.println("ОШИБКА: резюме " + r.getUuid() + " не найдено.");
         } else {
-            storage()[index] = r;
+            storage[index] = r;
             System.out.println("Резюме обновлено");
         }
     }
@@ -25,8 +25,8 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = searchIndex(r.getUuid());
         if (index >= 0) {
             System.out.println("ОШИБКА: резюме " + r.getUuid() + " находится в хранилище.");
-        } else if (size < storage().length) {
-            storage()[size] = r;
+        } else if (size < storage.length) {
+            storage[size] = r;
             size++;
         } else {
             System.out.println("ОШИБКА: хранилище заполнено.");
@@ -39,10 +39,10 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index < 0) {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
         } else if (index == size - 1) {
-            storage()[index] = null;
+            storage[index] = null;
             size--;
         } else {
-            System.arraycopy(storage(), index + 1, storage(), index, size - index);
+            System.arraycopy(storage, index + 1, storage, index, size - index);
             size--;
         }
     }
@@ -54,19 +54,19 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
             return null;
         }
-        return storage()[index];
+        return storage[index];
     }
 
     @Override
     public Resume[] getAll() {
         Resume[] allResumes = new Resume[size];
-        System.arraycopy(storage(), 0, allResumes, 0, size);
+        System.arraycopy(storage, 0, allResumes, 0, size);
         return allResumes;
     }
 
     @Override
     public void clear() {
-        Arrays.fill(storage(), 0, size, null);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
@@ -76,6 +76,4 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     protected abstract int searchIndex(String uuid);
-
-    protected abstract Resume[] storage();
 }
