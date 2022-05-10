@@ -26,7 +26,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             System.out.println("ОШИБКА: резюме " + r.getUuid() + " находится в хранилище.");
         } else if (size < storage.length) {
-            storage[size] = r;
+            saveInStorage(r, index);
             size++;
         } else {
             System.out.println("ОШИБКА: хранилище заполнено.");
@@ -76,4 +76,6 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     protected abstract int searchIndex(String uuid);
+
+    protected abstract void saveInStorage(Resume resume, int index);
 }
