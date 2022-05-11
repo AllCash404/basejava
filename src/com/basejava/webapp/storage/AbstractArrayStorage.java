@@ -8,7 +8,6 @@ public abstract class AbstractArrayStorage implements Storage {
     protected Resume[] storage = new Resume[10000];
     protected int size = 0;
 
-
     @Override
     public void update(Resume r) {
         int index = searchIndex(r.getUuid());
@@ -40,17 +39,17 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
         } else if (index == size - 1) {
             storage[index] = null;
-            size--;
         } else {
             System.arraycopy(storage, index + 1, storage, index, size - index);
-            size--;
         }
+        if (index >= 0)
+            size--;
     }
 
     @Override
     public Resume get(String uuid) {
         int index = searchIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("ОШИБКА: резюме " + uuid + " не найдено.");
             return null;
         }
