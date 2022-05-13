@@ -17,7 +17,11 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     protected void saveInStorage(Resume resume, int index) {
         int positiveIndex = index * -1;
         if (size != 0) {
-            System.arraycopy(storage, positiveIndex - 1, storage, positiveIndex, size);
+            if (size == storage.length - 1) {
+                System.arraycopy(storage, positiveIndex - 1, storage, positiveIndex, size - 1 );
+            } else {
+                System.arraycopy(storage, positiveIndex - 1, storage, positiveIndex, size);
+            }
             storage[positiveIndex - 1] = resume;
         } else
             storage[size] = resume;
